@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- items del recycler view -->
+    <dimen name="border_rv_items">10dp</dimen>
+    <dimen name="rv_item_border_stroke">1dp</dimen>
+    <dimen name="margin_bordered_images">16dp</dimen>
+
+
+</resources>
