@@ -1,6 +1,7 @@
 package com.gsaranda.walmarttest.fragments
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,5 +25,16 @@ class StoreDetailsFragment():DialogFragment(){
         )
         return mView
     }
+
+
+    //poner
+    private fun dimenciona() {
+        val displayMetrics = DisplayMetrics()
+        activity?.getWindowManager()?.getDefaultDisplay()?.getMetrics(displayMetrics)
+        val displayWidth = displayMetrics.widthPixels
+        val displayHeight = displayMetrics.heightPixels
+        dialog?.window?.setLayout((displayWidth * .85).toInt(), (displayHeight * .6).toInt())
+    }
+
 
 }
