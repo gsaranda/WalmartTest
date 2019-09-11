@@ -6,6 +6,18 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_bordered_images">
 
+    <View
+        android:id="@+id/v_item_store_clickable_section"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_items"
+        app:layout_constraintBottom_toBottomOf="@id/tv_item_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="@dimen/elevation_clickables"
+        />
     <ImageView
         android:id="@+id/iv_item_background"
         android:layout_width="0dp"
@@ -42,6 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_item_name"
         app:layout_constraintEnd_toEndOf="@id/iv_item_background"
         />
+
 
 
 

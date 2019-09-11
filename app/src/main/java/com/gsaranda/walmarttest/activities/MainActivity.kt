@@ -18,7 +18,9 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         rv_tiendas_cercanas.layoutManager=LinearLayoutManager(this)
-        val recyclerViewAdapter=WalmartStoreRecyclerViewAdapter()
+        val recyclerViewAdapter=WalmartStoreRecyclerViewAdapter(onItemSelected = {
+            store->
+        })
         rv_tiendas_cercanas.adapter=recyclerViewAdapter
         storeLocatorInteractor= StoreLocatorInteractor(onSuccess = {
             tiendasFound->

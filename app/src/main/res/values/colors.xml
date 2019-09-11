@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFE829</color>
     <color name="colorFadedBlack">#99000000</color>
     <color name="colorAddress">#2B167E</color>
+    <color name="colorRipple">#45000000</color>
 </resources>
