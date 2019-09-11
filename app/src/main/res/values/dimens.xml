@@ -5,6 +5,8 @@
     <dimen name="border_rv_items">10dp</dimen>
     <dimen name="rv_item_border_stroke">1dp</dimen>
     <dimen name="margin_bordered_images">16dp</dimen>
+    <dimen name="status_bar_height">25dp</dimen>
+    <dimen name="fading_list_lenght">20dp</dimen>
 
 
 </resources>

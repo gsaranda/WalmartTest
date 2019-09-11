@@ -6,11 +6,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gsaranda.walmarttest.R
+import com.gsaranda.walmarttest.models.WalmartStoreModel
 
 class WalmartStoreRecyclerViewAdapter: RecyclerView.Adapter<WalmartStoreRecyclerViewAdapter.StoreViewHolder>() {
+    var tiendas:List<WalmartStoreModel>
 
+    init {
+        tiendas= emptyList()
+    }
 
     override fun onBindViewHolder(holder: StoreViewHolder, position: Int) {
+        holder.tvName.text=tiendas.get(position).name
+        holder.tvAddress.text=tiendas.get(position).address
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreViewHolder {
@@ -19,8 +26,7 @@ class WalmartStoreRecyclerViewAdapter: RecyclerView.Adapter<WalmartStoreRecycler
     }
 
     override fun getItemCount(): Int {
-
-        return 0
+        return tiendas.size
     }
 
 

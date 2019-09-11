@@ -29,7 +29,7 @@ class StoreLocatorInteractor(val onSuccess: (List<WalmartStoreModel>) -> Unit, v
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { result ->
-                        Log.d("EXITO", "EXITO")
+                        Log.d("EXITO", result.responseArray.get(0).address)
                         onSuccess(result.responseArray)
                     },
                     { error ->
