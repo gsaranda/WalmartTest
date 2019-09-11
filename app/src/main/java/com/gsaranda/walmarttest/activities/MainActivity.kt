@@ -3,6 +3,7 @@ package com.gsaranda.walmarttest.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gsaranda.walmarttest.R
+import com.gsaranda.walmarttest.interactor.StoreLocatorInteractor
 
 class MainActivity : BaseActivity() {
 
@@ -12,6 +13,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onUiReady() {
-        super.onUiReady()
+       StoreLocatorInteractor().getWalmartStores()
     }
 }
