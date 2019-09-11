@@ -33,6 +33,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onUiReady() {
-      storeLocatorInteractor.getWalmartStores()
+      storeLocatorInteractor.getWalmartStores(this)
     }
 }
