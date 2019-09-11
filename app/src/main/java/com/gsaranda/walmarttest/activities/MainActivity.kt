@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gsaranda.walmarttest.R
 import com.gsaranda.walmarttest.adapter.WalmartStoreRecyclerViewAdapter
+import com.gsaranda.walmarttest.fragments.StoreDetailsFragment
 import com.gsaranda.walmarttest.interactor.StoreLocatorInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -20,6 +21,10 @@ class MainActivity : BaseActivity() {
         rv_tiendas_cercanas.layoutManager=LinearLayoutManager(this)
         val recyclerViewAdapter=WalmartStoreRecyclerViewAdapter(onItemSelected = {
             store->
+            val storeDetailsFragment=StoreDetailsFragment()
+            storeDetailsFragment.store=store
+            storeDetailsFragment.show(supportFragmentManager,getString(R.string.tag_store_detail_fragment))
+
         })
         rv_tiendas_cercanas.adapter=recyclerViewAdapter
         storeLocatorInteractor= StoreLocatorInteractor(onSuccess = {
