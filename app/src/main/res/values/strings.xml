@@ -12,5 +12,6 @@
     <string name="error_explain_gps_permissions">Necesitamos saber su ubicaión, para poder determinar las sucursales mas cercanas</string>
     <string name="modal_accept">Aceptar</string>
     <string name="error_need_gps_permissions">Es necesario que habilite el permiso de GPS para usar esta aplicación</string>
+    <string name="modal_enable_button">Habilitar</string>
 
 </resources>

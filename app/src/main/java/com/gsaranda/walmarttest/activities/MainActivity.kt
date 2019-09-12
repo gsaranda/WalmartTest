@@ -2,9 +2,11 @@ package com.gsaranda.walmarttest.activities
 
 import android.Manifest
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -55,10 +57,27 @@ class MainActivity : BaseActivity() {
             group_loading.visibility = View.GONE
 
             val message = getErrorMessage(errorType)
+
+            var acceptButtonmessage=""
+
+            if(errorType==ErrorTypes.CONNECTION) {
+               acceptButtonmessage=getString(R.string.modal_retry_button)
+            }
+            if(errorType==ErrorTypes.GPS) {
+                acceptButtonmessage=getString(R.string.modal_enable_button)
+            }
+
             despliegaModal(message,
-                getString(R.string.modal_retry_button),
+                acceptButtonmessage,
                 aceptCallback = { dialog, id ->
-                    makeStoresLocationRequest()
+                    if(errorType==ErrorTypes.CONNECTION) {
+                        makeStoresLocationRequest()
+                    }
+                    if(errorType==ErrorTypes.GPS)
+                    {
+                        startActivity( Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                        finish()
+                    }
                     dialog.dismiss()
                 },
                 cancelCallback = { dialog: DialogInterface, id: Int ->

@@ -12,6 +12,17 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import android.text.TextUtils
+import android.provider.Settings.Secure
+import android.provider.Settings.Secure.LOCATION_MODE_OFF
+import android.provider.Settings.SettingNotFoundException
+import android.provider.Settings.Secure.LOCATION_MODE
+import android.os.Build
+import android.provider.Settings
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 class StoreLocatorInteractor(
     val onSuccess: (List<WalmartStoreModel>) -> Unit,
@@ -49,9 +60,15 @@ class StoreLocatorInteractor(
     private fun filterStoresbyRange(context: Context, rawWalmartStores: List<WalmartStoreModel>) {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            getNearbyStores(location, rawWalmartStores)
-        }.addOnFailureListener {
+
+        if(isLocationEnabled(context)) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                getNearbyStores(location, rawWalmartStores)
+            }.addOnFailureListener {
+                onFailure(ErrorTypes.GPS)
+            }
+        }
+        else{
             onFailure(ErrorTypes.GPS)
         }
 
@@ -98,6 +115,11 @@ class StoreLocatorInteractor(
         storeLocation.longitude = storeLongitud
         val distance = location.distanceTo(storeLocation)
         return distance
+    }
+
+    fun isLocationEnabled(context: Context): Boolean {
+       val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
 }
