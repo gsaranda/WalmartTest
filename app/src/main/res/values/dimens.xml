@@ -9,6 +9,7 @@
     <dimen name="fading_list_lenght">20dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="elevation_clickables">2dp</dimen>
+    <dimen name="loading_message_size">18sp</dimen>
 
 
 </resources>

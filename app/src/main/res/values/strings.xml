@@ -4,4 +4,5 @@
     <string name="detail_open">Abierto</string>
     <string name="detail_phone">Teléfono</string>
     <string name="detail_manager">Gerente</string>
+    <string name="loading_wait_message">Espere por favor</string>
 </resources>

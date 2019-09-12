@@ -28,6 +28,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_main_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading_wait_message"
+        android:textSize="@dimen/loading_message_size"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="@dimen/margin_small"
+        app:layout_constraintBottom_toTopOf="@id/pb_activity_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
     <ProgressBar
         android:id="@+id/pb_activity_main"
         android:layout_width="wrap_content"
@@ -41,6 +53,6 @@
         android:id="@+id/group_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="pb_activity_main,v_security_blockview" />
+        app:constraint_referenced_ids="pb_activity_main,v_security_blockview,tv_main_loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
