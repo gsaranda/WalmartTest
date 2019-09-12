@@ -1,8 +1,13 @@
 package com.gsaranda.walmarttest.activities
 
+import android.Manifest
 import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gsaranda.walmarttest.R
 import com.gsaranda.walmarttest.adapter.WalmartStoreRecyclerViewAdapter
@@ -14,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity() {
 
     lateinit var storeLocatorInteractor: StoreLocatorInteractor
+    val GPS_PERMISSION_CODE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,15 +48,16 @@ class MainActivity : BaseActivity() {
             group_loading.visibility = View.GONE
 
             val message = getErrorMessage(errorType)
-            despliegaModal(message, getString(R.string.modal_retry_button), aceptCallback = { dialog, id ->
-                group_loading.visibility = View.VISIBLE
-                storeLocatorInteractor.getWalmartStores(this)
-                dialog.dismiss()
-            },
-            cancelCallback = {dialog: DialogInterface, id: Int ->
-                dialog.cancel()
-                finish()
-            }
+            despliegaModal(message,
+                getString(R.string.modal_retry_button),
+                aceptCallback = { dialog, id ->
+                    makeStoresLocationRequest()
+                    dialog.dismiss()
+                },
+                cancelCallback = { dialog: DialogInterface, id: Int ->
+                    dialog.cancel()
+                    finish()
+                }
             )
 
 
@@ -57,7 +65,53 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onUiReady() {
-        storeLocatorInteractor.getWalmartStores(this)
+        if (userHaveGpsPermissions()) {
+            storeLocatorInteractor.getWalmartStores(this)
+        } else {
+            group_loading.visibility = View.GONE
+            requestPermission()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            GPS_PERMISSION_CODE -> {
+
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                        if (!shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                            despliegaModal(getString(R.string.error_need_gps_permissions),
+                                getString(R.string.modal_accept),
+                                aceptCallback = { dialog, id ->
+                                    dialog.dismiss()
+                                    finish()
+                                })
+                        }
+                        else {
+                            despliegaModal(getString(R.string.error_explain_gps_permissions),
+                                getString(R.string.modal_retry_button),
+                                aceptCallback = { dialog, id ->
+                                    requestPermission()
+                                    dialog.dismiss()
+                                },
+                                cancelCallback = { dialog: DialogInterface, id: Int ->
+                                    dialog.cancel()
+                                    finish()
+                                })
+                        }
+
+                } else {
+                    makeStoresLocationRequest()
+                }
+
+            }
+        }
     }
 
     private fun getErrorMessage(errorType: ErrorTypes): String {
@@ -68,5 +122,31 @@ class MainActivity : BaseActivity() {
 
             else -> return ""
         }
+    }
+
+    private fun userHaveGpsPermissions(): Boolean {
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            return false
+        }
+        return true
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            GPS_PERMISSION_CODE
+        )
+    }
+
+
+
+    private fun makeStoresLocationRequest() {
+        group_loading.visibility = View.VISIBLE
+        storeLocatorInteractor.getWalmartStores(this)
     }
 }

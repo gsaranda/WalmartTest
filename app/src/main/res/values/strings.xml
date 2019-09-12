@@ -9,5 +9,8 @@
     <string name="modal_retry_button">Reintentar</string>
     <string name="error_message_internet">Hubo un error, por favor revisa tu conexión a internet</string>
     <string name="error_message_gps">Hubo un error con el GPS, por favor asegúrese de tenerlo habilitado</string>
+    <string name="error_explain_gps_permissions">Necesitamos saber su ubicaión, para poder determinar las sucursales mas cercanas</string>
+    <string name="modal_accept">Aceptar</string>
+    <string name="error_need_gps_permissions">Es necesario que habilite el permiso de GPS para usar esta aplicación</string>
 
 </resources>
