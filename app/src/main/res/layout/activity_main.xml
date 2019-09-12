@@ -7,11 +7,11 @@
     tools:context=".activities.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tiendas_cercanas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/rv_tiendas_cercanas"
-        android:requiresFadingEdge="vertical"
         android:fadingEdgeLength="@dimen/fading_list_lenght"
+        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,14 +32,14 @@
         android:id="@+id/tv_main_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/loading_wait_message"
-        android:textSize="@dimen/loading_message_size"
-        android:textColor="@color/colorAccent"
         android:layout_marginBottom="@dimen/margin_small"
+        android:text="@string/loading_wait_message"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/loading_message_size"
         app:layout_constraintBottom_toTopOf="@id/pb_activity_main"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ProgressBar
         android:id="@+id/pb_activity_main"
         android:layout_width="wrap_content"
@@ -48,6 +48,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_update_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_revert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_loading"

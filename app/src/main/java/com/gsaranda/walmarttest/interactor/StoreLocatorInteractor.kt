@@ -67,7 +67,7 @@ class StoreLocatorInteractor(
                 storeIterator.remove()
             }
         }
-        val totalElementos=if(rawWalmartStores.size<24)  rawWalmartStores.size else 24
+        val totalElementos=if(rawWalmartStores.size<25)  rawWalmartStores.size else 25
 
         //Se regresa la lista ya con los elementos ordenados
         onSuccess(rawWalmartStores.sortedBy {

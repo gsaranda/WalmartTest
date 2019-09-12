@@ -26,6 +26,12 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         rv_tiendas_cercanas.layoutManager = LinearLayoutManager(this)
+
+        fab_update_location.hide()
+        fab_update_location.setOnClickListener {
+            fab_update_location.hide()
+            makeStoresLocationRequest()
+        }
         val recyclerViewAdapter = WalmartStoreRecyclerViewAdapter(onItemSelected = { store ->
             val storeDetailsFragment = StoreDetailsFragment()
             storeDetailsFragment.store = store
@@ -40,6 +46,7 @@ class MainActivity : BaseActivity() {
         })
         rv_tiendas_cercanas.adapter = recyclerViewAdapter
         storeLocatorInteractor = StoreLocatorInteractor(onSuccess = { tiendasFound ->
+            fab_update_location.show()
             group_loading.visibility = View.GONE
             recyclerViewAdapter.tiendas = tiendasFound
             recyclerViewAdapter.notifyDataSetChanged()
@@ -56,7 +63,12 @@ class MainActivity : BaseActivity() {
                 },
                 cancelCallback = { dialog: DialogInterface, id: Int ->
                     dialog.cancel()
-                    finish()
+                    if(recyclerViewAdapter.itemCount<=0) {
+                        finish()
+                    }else{
+                        fab_update_location.show()
+                    }
+
                 }
             )
 
