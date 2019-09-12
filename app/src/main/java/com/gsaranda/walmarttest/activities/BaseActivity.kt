@@ -1,9 +1,12 @@
 package com.gsaranda.walmarttest.activities
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.gsaranda.walmarttest.R
 
 abstract class BaseActivity : AppCompatActivity(){
 
@@ -12,14 +15,21 @@ abstract class BaseActivity : AppCompatActivity(){
 
     protected open fun onUiReady(){}
 
-    //se setea el tema por default para evitar la pantalla blanca al iniciar por primera vez
+    protected fun despliegaModal(message:String,textAccept:String,aceptCallback:(dialog:DialogInterface,id:Int)->Unit){
+        val dialogBuilder = AlertDialog.Builder(this)
 
-    protected  fun cambiaActividad( actividad: Class<out Activity>) {
-        val intent= Intent(this,actividad)
-        startActivity(intent)
-        finish()
+
+        dialogBuilder.setTitle(getString(R.string.app_name))
+        dialogBuilder.setMessage(message)
+            .setCancelable(false)
+
+            .setPositiveButton(textAccept, aceptCallback)
+            // negative button text and action
+            .setNegativeButton(getString(R.string.modal_cancel), {
+                    dialog, id -> dialog.cancel()
+            }).show()
+
     }
-
 
     override fun onPause() {
         super.onPause()

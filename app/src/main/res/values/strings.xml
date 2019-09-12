@@ -5,4 +5,5 @@
     <string name="detail_phone">Teléfono</string>
     <string name="detail_manager">Gerente</string>
     <string name="loading_wait_message">Espere por favor</string>
+    <string name="modal_cancel">Cancelar</string>
 </resources>

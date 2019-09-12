@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class StoreLocatorInteractor(
     val onSuccess: (List<WalmartStoreModel>) -> Unit,
-    val onFailure: () -> Unit
+    val onFailure: (errorType:ErrorTypes) -> Unit
 ) {
 
 
@@ -41,7 +41,7 @@ class StoreLocatorInteractor(
                     },
                     { error ->
                         Log.d("ERROR", error.message)
-                        onFailure()
+                        onFailure(ErrorTypes.CONNECTION)
                     }
                 )
     }
@@ -52,7 +52,7 @@ class StoreLocatorInteractor(
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             getNearbyStores(location, rawWalmartStores)
         }.addOnFailureListener {
-            onFailure()
+            onFailure(ErrorTypes.GPS)
         }
 
     }
@@ -63,10 +63,11 @@ class StoreLocatorInteractor(
         val storeIterator = rawWalmartStores.iterator() as MutableIterator<WalmartStoreModel>
         while (storeIterator.hasNext()) {
             val store = storeIterator.next()
-            if (!isNearby(location, store) && rawWalmartStores.size > 25) {
+            if (!isNearby(location, store)) {
                 storeIterator.remove()
             }
         }
+        val totalElementos=if(rawWalmartStores.size<24)  rawWalmartStores.size else 24
 
         //Se regresa la lista ya con los elementos ordenados
         onSuccess(rawWalmartStores.sortedBy {
@@ -75,7 +76,7 @@ class StoreLocatorInteractor(
                 it.latPoint.toDouble(),
                 it.lonPoint.toDouble()
             )
-        }.subList(0, 25))
+        }.subList(0, totalElementos))
     }
 
     private fun isNearby(location: Location, store: WalmartStoreModel): Boolean {
@@ -84,7 +85,7 @@ class StoreLocatorInteractor(
         storeLocation.longitude = store.lonPoint.toDouble()
         val distance = location.distanceTo(storeLocation)
         //preguntamos si esta a 200 km
-        return distance < 200_000
+        return distance < 100_000
     }
 
     private fun getDistance(
