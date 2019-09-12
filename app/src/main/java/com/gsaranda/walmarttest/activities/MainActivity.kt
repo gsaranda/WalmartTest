@@ -1,10 +1,9 @@
 package com.gsaranda.walmarttest.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gsaranda.walmarttest.R
 import com.gsaranda.walmarttest.adapter.WalmartStoreRecyclerViewAdapter
 import com.gsaranda.walmarttest.fragments.StoreDetailsFragment
@@ -42,11 +41,16 @@ class MainActivity : BaseActivity() {
             group_loading.visibility = View.GONE
 
             val message = getErrorMessage(errorType)
-            despliegaModal(message, "Reintentar", aceptCallback = { dialog, id ->
+            despliegaModal(message, getString(R.string.modal_retry_button), aceptCallback = { dialog, id ->
                 group_loading.visibility = View.VISIBLE
                 storeLocatorInteractor.getWalmartStores(this)
                 dialog.dismiss()
-            })
+            },
+            cancelCallback = {dialog: DialogInterface, id: Int ->
+                dialog.cancel()
+                finish()
+            }
+            )
 
 
         })
@@ -59,8 +63,8 @@ class MainActivity : BaseActivity() {
     private fun getErrorMessage(errorType: ErrorTypes): String {
 
         when (errorType) {
-            ErrorTypes.CONNECTION -> return "Conexion"
-            ErrorTypes.GPS -> return "GPS"
+            ErrorTypes.CONNECTION -> return getString(R.string.error_message_internet)
+            ErrorTypes.GPS -> return getString(R.string.error_message_gps)
 
             else -> return ""
         }

@@ -15,22 +15,24 @@ abstract class BaseActivity : AppCompatActivity(){
 
     protected open fun onUiReady(){}
 
-    protected fun despliegaModal(message:String,textAccept:String,aceptCallback:(dialog:DialogInterface,id:Int)->Unit){
+    protected fun despliegaModal(message:String,textAccept:String,aceptCallback:(dialog:DialogInterface,id:Int)->Unit,cancelCallback:(dialog:DialogInterface,id:Int)->Unit){
         val dialogBuilder = AlertDialog.Builder(this)
-
-
         dialogBuilder.setTitle(getString(R.string.app_name))
         dialogBuilder.setMessage(message)
             .setCancelable(false)
-
+            .setIcon(getDrawable(android.R.drawable.ic_dialog_alert))
             .setPositiveButton(textAccept, aceptCallback)
-            // negative button text and action
-            .setNegativeButton(getString(R.string.modal_cancel), {
-                    dialog, id -> dialog.cancel()
-            }).show()
-
+            .setNegativeButton(getString(R.string.modal_cancel), cancelCallback).show()
     }
 
+    protected fun despliegaModal(message:String,textAccept:String,aceptCallback:(dialog:DialogInterface,id:Int)->Unit){
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle(getString(R.string.app_name))
+        dialogBuilder.setMessage(message)
+            .setCancelable(false)
+            .setIcon(getDrawable(android.R.drawable.ic_dialog_alert))
+            .setPositiveButton(textAccept, aceptCallback).show()
+    }
     override fun onPause() {
         super.onPause()
         estaEnPausa=true
