@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">StoreLocator</string>
     <string name="tag_store_detail_fragment">Detalle Tienda</string>
+    <string name="detail_open">Abierto</string>
+    <string name="detail_phone">Teléfono</string>
+    <string name="detail_manager">Gerente</string>
 </resources>

@@ -8,22 +8,87 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.DialogFragment
-import com.gsaranda.walmarttest.R
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.gsaranda.walmarttest.models.WalmartStoreModel
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.gsaranda.walmarttest.R
+import kotlinx.android.synthetic.main.dialog_fragment_store_detail.*
 
-class StoreDetailsFragment():DialogFragment(){
 
-  var  store:WalmartStoreModel?=null
+class StoreDetailsFragment() : DialogFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+    var store: WalmartStoreModel? = null
+    var onPause = false
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val mView = inflater.inflate(R.layout.dialog_fragment_store_detail, container, false)
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(
-            getDrawable(context!!,
+            getDrawable(
+                context!!,
                 android.R.color.transparent
             )
         )
         return mView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+    }
+
+    private fun showStoreOnMap() {
+        val mapfragment = mapa as SupportMapFragment
+        mapfragment.getMapAsync(object : OnMapReadyCallback {
+            override fun onMapReady(googleMap: GoogleMap?) {
+
+                val latLng = LatLng(store?.latPoint!!.toDouble(), store?.lonPoint!!.toDouble())
+                val markerOptions: MarkerOptions =
+                    MarkerOptions().position(latLng).title(store?.name)
+                val zoomLevel = 18.0f
+
+                googleMap.let {
+                    it!!.addMarker(markerOptions)
+                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+                }
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (onPause) {
+            onPause = false
+        } else {
+            dimenciona()
+            tv_detail_manager_value.text=store?.manager
+            tv_detail_open_value.text=store?.opens
+            tv_detail_phone_value.text=store?.telephone
+            showStoreOnMap()
+        }
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        onPause = true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val fragment = fragmentManager!!
+            .findFragmentById(R.id.mapa)
+        if (fragment != null)
+            fragmentManager!!.beginTransaction().remove(fragment).commit()
     }
 
 
@@ -33,7 +98,7 @@ class StoreDetailsFragment():DialogFragment(){
         activity?.getWindowManager()?.getDefaultDisplay()?.getMetrics(displayMetrics)
         val displayWidth = displayMetrics.widthPixels
         val displayHeight = displayMetrics.heightPixels
-        dialog?.window?.setLayout((displayWidth * .85).toInt(), (displayHeight * .6).toInt())
+        dialog?.window?.setLayout(displayWidth, displayHeight)
     }
 
 

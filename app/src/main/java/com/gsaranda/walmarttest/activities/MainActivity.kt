@@ -23,8 +23,10 @@ class MainActivity : BaseActivity() {
             store->
             val storeDetailsFragment=StoreDetailsFragment()
             storeDetailsFragment.store=store
-            storeDetailsFragment.show(supportFragmentManager,getString(R.string.tag_store_detail_fragment))
-
+            val fragmentDuplicate=supportFragmentManager.findFragmentByTag(getString(R.string.tag_store_detail_fragment))
+            if(fragmentDuplicate==null) {
+                storeDetailsFragment.show(supportFragmentManager,getString(R.string.tag_store_detail_fragment))
+            }
         })
         rv_tiendas_cercanas.adapter=recyclerViewAdapter
         storeLocatorInteractor= StoreLocatorInteractor(onSuccess = {

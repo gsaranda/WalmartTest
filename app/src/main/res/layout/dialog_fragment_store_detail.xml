@@ -1,26 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <fragment
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:id="@+id/mapa"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:id="@+id/mapa"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <ImageView
-            android:id="@+id/iv_bloqueo_mapa"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#af0d090a"
-            android:clickable="true"
-    />
-    <ProgressBar
-            android:id="@+id/pb_mapa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+        android:id="@+id/iv_detail_card_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/single_color_bordered_drawable"
+        android:layout_marginEnd="@dimen/margin_bordered_images"
+        android:layout_marginStart="@dimen/margin_bordered_images"
+        android:layout_marginTop="@dimen/margin_bordered_images"
+        app:layout_constraintBottom_toBottomOf="@id/tv_detail_manager_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <TextView
+        android:id="@+id/tv_detail_open_label"
+        style="@style/detailLabel"
+        android:text="@string/detail_open"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintStart_toStartOf="@id/iv_detail_card_background"
+        app:layout_constraintTop_toTopOf="@id/iv_detail_card_background"
+        app:layout_constraintEnd_toEndOf="@id/iv_detail_card_background"
+        />
+
+    <TextView
+        android:id="@+id/tv_detail_open_value"
+        style="@style/detailValue"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintStart_toStartOf="@id/iv_detail_card_background"
+        app:layout_constraintEnd_toEndOf="@id/iv_detail_card_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_open_label"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_detail_phone_label"
+        style="@style/detailLabel"
+        android:text="@string/detail_phone"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintStart_toStartOf="@id/iv_detail_card_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_open_value"
+        app:layout_constraintEnd_toEndOf="@id/iv_detail_card_background"
+        />
+
+    <TextView
+        android:id="@+id/tv_detail_phone_value"
+        style="@style/detailValue"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintStart_toStartOf="@id/iv_detail_card_background"
+        app:layout_constraintEnd_toEndOf="@id/iv_detail_card_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_phone_label"
+        />
 
 
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_detail_manager_label"
+        style="@style/detailLabel"
+        android:text="@string/detail_manager"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintStart_toStartOf="@id/iv_detail_card_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_phone_value"
+        app:layout_constraintEnd_toEndOf="@id/iv_detail_card_background"
+        />
+    <TextView
+        android:id="@+id/tv_detail_manager_value"
+        style="@style/detailValue"
+        android:layout_marginTop="@dimen/margin_small"
+        app:layout_constraintStart_toStartOf="@id/iv_detail_card_background"
+        app:layout_constraintEnd_toEndOf="@id/iv_detail_card_background"
+        app:layout_constraintTop_toBottomOf="@id/tv_detail_manager_label"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
