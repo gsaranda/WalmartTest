@@ -52,12 +52,16 @@ class StoreDetailsFragment() : DialogFragment() {
             override fun onMapReady(googleMap: GoogleMap?) {
 
                 val latLng = LatLng(store?.latPoint!!.toDouble(), store?.lonPoint!!.toDouble())
+
+
                 val markerOptions: MarkerOptions =
                     MarkerOptions().position(latLng).title(store?.name)
+
+
                 val zoomLevel = 18.0f
 
                 googleMap.let {
-                    it!!.addMarker(markerOptions)
+                    it!!.addMarker(markerOptions).showInfoWindow()
                     it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
                 }
             }
@@ -70,9 +74,26 @@ class StoreDetailsFragment() : DialogFragment() {
             onPause = false
         } else {
             dimenciona()
-            tv_detail_manager_value.text=store?.manager
+            if(store?.manager!=""){
+                tv_detail_manager_value.text=store?.manager
+            }
+            else{
+                tv_detail_manager_value.visibility=View.GONE
+                tv_detail_manager_label.visibility=View.GONE
+            }
+
+            if(store?.telephone!="")
+            {
+                tv_detail_phone_value.text=store?.telephone
+            }
+            else{
+                tv_detail_phone_value.visibility=View.GONE
+                tv_detail_phone_label.visibility=View.GONE
+            }
+
+
             tv_detail_open_value.text=store?.opens
-            tv_detail_phone_value.text=store?.telephone
+
             showStoreOnMap()
         }
     }
@@ -91,8 +112,6 @@ class StoreDetailsFragment() : DialogFragment() {
             fragmentManager!!.beginTransaction().remove(fragment).commit()
     }
 
-
-    //poner
     private fun dimenciona() {
         val displayMetrics = DisplayMetrics()
         activity?.getWindowManager()?.getDefaultDisplay()?.getMetrics(displayMetrics)
