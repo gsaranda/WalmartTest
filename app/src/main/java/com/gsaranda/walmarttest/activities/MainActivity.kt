@@ -17,6 +17,8 @@ import com.gsaranda.walmarttest.fragments.StoreDetailsFragment
 import com.gsaranda.walmarttest.interactor.ErrorTypes
 import com.gsaranda.walmarttest.interactor.StoreLocatorInteractor
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : BaseActivity() {
 
@@ -97,7 +99,7 @@ class MainActivity : BaseActivity() {
 
     override fun onUiReady() {
         if (userHaveGpsPermissions()) {
-            storeLocatorInteractor.getWalmartStores(this)
+            storeLocatorInteractor.getWalmartStores(this, CoroutineScope(Dispatchers.IO))
         } else {
             group_loading.visibility = View.GONE
             requestPermission()
@@ -178,6 +180,6 @@ class MainActivity : BaseActivity() {
 
     private fun makeStoresLocationRequest() {
         group_loading.visibility = View.VISIBLE
-        storeLocatorInteractor.getWalmartStores(this)
+        storeLocatorInteractor.getWalmartStores(this, CoroutineScope(Dispatchers.IO))
     }
 }
